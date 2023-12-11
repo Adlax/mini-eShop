@@ -2,10 +2,7 @@ import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { createPortal } from "react-dom";
 import Cart from "./Cart";
 
-const CartModal = forwardRef(function CartModal({ state, title, modalActions }, ref) {
-	// console.log(state);
-	const { items } = state.cart;
-	const { handleUpdateCart } = state;
+const CartModal = forwardRef(function CartModal({ title, modalActions }, ref) {
 	const dialog = useRef();
 
 	useImperativeHandle(ref, () => {
@@ -19,7 +16,7 @@ const CartModal = forwardRef(function CartModal({ state, title, modalActions }, 
 	return createPortal(
 		<dialog id="modal" ref={dialog}>
 			<h2>{title}</h2>
-			<Cart items={items} handleUpdateCart={handleUpdateCart} />
+			<Cart />
 			<form method="dialog" id="modal-actions">
 				{modalActions}
 			</form>

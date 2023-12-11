@@ -1,6 +1,8 @@
 import React from "react";
+import { useCartContext } from "../store/context";
 
-const Product = ({ id, image, title, price, description, handleAddToCart }) => {
+const Product = ({ id, image, title, price, description }) => {
+	const { handleAddToCart } = useCartContext();
 	return (
 		<article className="product">
 			<img src={image} alt="image" />

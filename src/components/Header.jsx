@@ -1,16 +1,17 @@
 import React, { useRef } from "react";
 import CartModal from "./CartModal";
+import { useCartContext } from "../store/context";
 
-const Header = ({ state }) => {
-	// console.log(state);
-	const { cart, handleUpdateCart } = state;
+const Header = () => {
+	const { items, handleUpdateCart } = useCartContext();
+	console.log(items);
 
 	const modal = useRef();
 	const openModal = () => {
 		modal.current.open();
 	};
 
-	const cartItemsNumber = cart.items.length;
+	const cartItemsNumber = items.length;
 	let modalActions = <button>Close</button>;
 	if (cartItemsNumber > 0) {
 		modalActions = (
@@ -23,7 +24,7 @@ const Header = ({ state }) => {
 
 	return (
 		<>
-			<CartModal state={state} ref={modal} title="Your Cart" modalActions={modalActions} />
+			<CartModal ref={modal} title="Your Cart" modalActions={modalActions} />
 			<header id="main-header">
 				<div id="main-title">
 					<img src="logo.png" alt="logo" />

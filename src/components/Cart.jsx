@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useCartContext } from "../store/context";
 
-const Cart = ({ items, handleUpdateCart }) => {
-	const totalPrice = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+const Cart = () => {
+	const { items: cartItems, handleUpdateCart } = useCartContext();
+	const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
 	const formattedTotalPrice = `$${totalPrice.toFixed(2)}`;
 
 	return (
 		<div id="cart">
-			{items.length === 0 && <p>No items in cart!</p>}
-			{items.length > 0 && (
+			{cartItems.length === 0 && <p>No items in cart!</p>}
+			{cartItems.length > 0 && (
 				<ul id="cart-items">
-					{items.map((item) => {
+					{cartItems.map((item) => {
 						const formattedPrice = `$${item.price.toFixed(2)}`;
 						return (
 							<li key={item.id}>
