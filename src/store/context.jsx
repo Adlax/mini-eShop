@@ -1,68 +1,36 @@
-import { createContext, useContext, useState } from "react";
-import DUMMY_PRODUCTS from "../dummy-products";
+import { createContext, useContext, useReducer } from "react";
+import reducer from "./reduder";
+import { ADD_TO_CART, UPDATE_CART } from "./actions";
 
 const initContext = {
 	items: [],
+	handleAddToCart: () => {},
+	handleUpdateCart: () => {},
 };
 
 export const CartContext = createContext();
 
 export const CartContextProvider = ({ children }) => {
-	const [cart, setCart] = useState({
-		items: [],
-	});
+	const [store, dispatch] = useReducer(reducer, initContext);
 
-	const handleAddToCart = (id) => {
-		setCart((oldState) => {
-			const newState = [...oldState.items];
-			const existingItemIndex = newState.findIndex((item) => item.id === id);
-			const existingItem = newState[existingItemIndex];
-			if (existingItem) {
-				const updatedItem = {
-					...existingItem,
-					quantity: existingItem.quantity + 1,
-				};
-				newState[existingItemIndex] = updatedItem;
-			} else {
-				const newItem = DUMMY_PRODUCTS.find((item) => item.id === id);
-				newState.push({
-					id: id,
-					name: newItem.title,
-					price: newItem.price,
-					quantity: 1,
-				});
-			}
-			return {
-				items: newState,
-			};
+	const addToCartAC = (id) => {
+		dispatch({
+			type: ADD_TO_CART,
+			payload: id,
 		});
 	};
 
-	const handleUpdateCart = (id, amount) => {
-		setCart((oldState) => {
-			const newState = [...oldState.items];
-			const existingItemIndex = newState.findIndex((item) => item.id === id);
-			const existingItem = { ...newState[existingItemIndex] };
-			existingItem.quantity += amount;
-
-			if (existingItem.amount <= 0) {
-				newState.splice(existingItemIndex, 1);
-			} else {
-				newState[existingItemIndex] = existingItem;
-			}
-
-			return {
-				items: newState,
-			};
+	const updateToCartAC = (id, amount) => {
+		dispatch({
+			type: UPDATE_CART,
+			payload: { id, amount },
 		});
 	};
-
-	// const state = { cart, handleAddToCart, handleUpdateCart };
 
 	const state = {
-		items: cart.items,
-		handleAddToCart,
-		handleUpdateCart,
+		items: store.items,
+		addToCartAC,
+		updateToCartAC,
 	};
 
 	return <CartContext.Provider value={state}>{children}</CartContext.Provider>;

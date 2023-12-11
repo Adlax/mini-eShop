@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import { useCartContext } from "../store/context";
 
 const Cart = () => {
-	const { items: cartItems, handleUpdateCart } = useCartContext();
+	const { items: cartItems, updateToCartAC } = useCartContext();
+	console.log(cartItems);
 	const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
 	const formattedTotalPrice = `$${totalPrice.toFixed(2)}`;
@@ -21,9 +22,9 @@ const Cart = () => {
 									<span>({formattedPrice})</span>
 								</div>
 								<div className="cart-item-actions">
-									<button onClick={() => handleUpdateCart(item.id, -1)}>-</button>
+									<button onClick={() => updateToCartAC(item.id, -1)}>-</button>
 									<span>{item.quantity}</span>
-									<button onClick={() => handleUpdateCart(item.id, +1)}>+</button>
+									<button onClick={() => updateToCartAC(item.id, +1)}>+</button>
 								</div>
 							</li>
 						);

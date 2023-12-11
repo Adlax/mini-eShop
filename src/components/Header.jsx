@@ -3,8 +3,8 @@ import CartModal from "./CartModal";
 import { useCartContext } from "../store/context";
 
 const Header = () => {
-	const { items, handleUpdateCart } = useCartContext();
-	console.log(items);
+	const { items } = useCartContext();
+	// console.log(items);
 
 	const modal = useRef();
 	const openModal = () => {

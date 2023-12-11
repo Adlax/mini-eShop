@@ -2,7 +2,7 @@ import React from "react";
 import { useCartContext } from "../store/context";
 
 const Product = ({ id, image, title, price, description }) => {
-	const { handleAddToCart } = useCartContext();
+	const { addToCartAC } = useCartContext();
 	return (
 		<article className="product">
 			<img src={image} alt="image" />
@@ -13,7 +13,7 @@ const Product = ({ id, image, title, price, description }) => {
 					<p>description</p>
 				</div>
 				<p className="product-actions">
-					<button onClick={() => handleAddToCart(id)}>Add to Cart</button>
+					<button onClick={() => addToCartAC(id)}>Add to Cart</button>
 				</p>
 			</div>
 		</article>
