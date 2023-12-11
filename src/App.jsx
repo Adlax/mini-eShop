@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "./components/Header";
 import Shop from "./components/Shop";
 import DUMMY_PRODUCTS from "./dummy-products";
+import Product from "./components/Product";
 
 const App = () => {
 	const [cart, setCart] = useState({
@@ -58,7 +59,16 @@ const App = () => {
 	return (
 		<>
 			<Header state={state} />
-			<Shop state={state} />
+			<Shop>
+				{DUMMY_PRODUCTS.map((product) => {
+					// console.log(product);
+					return (
+						<li key={product.id}>
+							<Product {...product} handleAddToCart={handleAddToCart} />
+						</li>
+					);
+				})}
+			</Shop>
 		</>
 	);
 };
